@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Author;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PostBookRequest extends FormRequest
@@ -14,11 +15,11 @@ class PostBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'isbn'=>'required|string|min:13|max:13',
-            'title'=>'required|string|min:1',
-            'description'=>'required|string|min:1',
-            'authors'=>'required|array|min:1',
-            'authors.*'=>'required|integer|exists:authors,id',
+            'isbn'=>'required|string|unique|min:13|max:13',
+            'title'=>'required|string|max:250',
+            'description'=>'required|string',
+            'authors'=>'required|array',
+            'authors.*'=>'required|int|exists:'.Author::class.',id',
         ];
     }
 }
